@@ -1,6 +1,32 @@
-<h1>{{ question.question_text }}</h1>
+<form action="{% url 'polls:vote' question.id %}" method='post'>
+    {% csrf_token %} {% comment %}// para proteger del ataque  Cross Site Request Forgery  {% endcomment %}
+    <fieldset>
+        <legend><h1>{{ question.question_text}}</h1></legend>
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        {% for choice in question.choice_set.all %}
+            <input 
+                type="text"
+                name='choice'
+                id='choice{{ forloop.counter }}' {% comment %}id con el que se maneja la respuesta en HTML{% endcomment %}
+                value='{{choice.id}}' {% comment %}el id que se definio cuando se creo la respuesta en la BD {% endcomment %}
+                required
+                >
+                <label for="choice{{ forloop.counter }}">
+                    {{ choice.choice_text }}
+                </label>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value='vote'>
+</form>
+
+
+
+
+{% comment %} <h1>{{ question.question_text }}</h1>
 <ul>
     {% for choice in question.choice_set.all %}
         <li>{{ choice.choice_text }}</li>
     {% endfor %}
-</ul>
+</ul> {% endcomment %}
