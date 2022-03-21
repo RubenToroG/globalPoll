@@ -7,7 +7,7 @@
         {% endif %}
         {% for choice in question.choice_set.all %}
             <input 
-                type="text"
+                type="radio"
                 name='choice'
                 id='choice{{ forloop.counter }}' {% comment %}id con el que se maneja la respuesta en HTML{% endcomment %}
                 value='{{choice.id}}' {% comment %}el id que se definio cuando se creo la respuesta en la BD {% endcomment %}
